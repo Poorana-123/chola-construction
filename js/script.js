@@ -10,3 +10,11 @@ window.addEventListener("scroll", () => {
 
 });
 
+function calculateCost() {
+    let area = document.getElementById("area").value;
+    let costPerSqFt = 1800; // example rate
+    let total = area * costPerSqFt;
+
+    document.getElementById("result").innerText =
+        "Estimated Cost: ₹ " + total;
+}
