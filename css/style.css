@@ -500,7 +500,7 @@ body{
 }
 
 .process-section h2{
-    color:#0b2c3d;
+    color: #E3B837;
     font-size:2.8rem;
     margin-bottom:60px;
 }
@@ -533,14 +533,10 @@ body{
     right:-18px;
     top:50%;
     transform:translateY(-50%);
-    color:#00c896;
+    color:#E3B837;
     font-size:22px;
     z-index:5;
-    background:linear-gradient(
-        90deg,
-        #00c896,
-        #0099ff
-    );
+    background:#E3B837;
     overflow:hidden;
      border-radius:10px;
 }
@@ -551,11 +547,7 @@ body{
     left:100%;
     width:30px;
     height:4px;
-    background:linear-gradient(
-        90deg,
-        #00c896,
-        #0099ff
-    );
+    background:#E3B837;
     transform:translateY(-50%);
      animation:arrowMove 2s linear infinite;
 }
