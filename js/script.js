@@ -1,17 +1,89 @@
+// ======================================================
+// CHOLA CONSTRUCTION
+// SCRIPT.JS - PART 1
+// Navbar + Process + Map + Calculator
+// ======================================================
+
+
+// ================= NAVBAR SCROLL =================
+
 window.addEventListener("scroll", () => {
+
     const navbar = document.querySelector(".navbar");
 
-    if (navbar) {
-        if (window.scrollY > 50) {
-            navbar.classList.add("scrolled");
-        } else {
-            navbar.classList.remove("scrolled");
-        }
+    if (!navbar) return;
+
+    if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+    } else {
+        navbar.classList.remove("scrolled");
     }
+
 });
 
 
-// ================= GLOBAL VARIABLES =================
+// ======================================================
+// CONSTRUCTION PROCESS
+// ======================================================
+
+const steps = document.querySelectorAll(".step");
+
+if (steps.length > 0) {
+
+    let current = 0;
+    let interval;
+
+    function activate(index){
+
+        steps.forEach(step=>{
+            step.classList.remove("active");
+        });
+
+        steps[index].classList.add("active");
+    }
+
+    function startAnimation(){
+
+        interval = setInterval(()=>{
+
+            current++;
+
+            if(current >= steps.length){
+                current = 0;
+            }
+
+            activate(current);
+
+        },2000);
+
+    }
+
+    activate(0);
+
+    startAnimation();
+
+    steps.forEach((step,index)=>{
+
+        step.addEventListener("click",()=>{
+
+            clearInterval(interval);
+
+            current = index;
+
+            activate(current);
+
+            startAnimation();
+
+        });
+
+    });
+
+}
+
+// ======================================================
+// GLOBAL VARIABLES
+// ======================================================
+
 let map;
 let marker;
 let zoneFactor = 1;
@@ -20,47 +92,90 @@ let miniMap;
 let miniMarker;
 
 
-// ================= MAIN MAP =================
+
+// ======================================================
+// MAIN MAP
+// ======================================================
+
 function initMap() {
 
-    map = L.map('map').setView([10.7905, 78.7047], 7);
+    const mapContainer = document.getElementById("map");
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    if (!mapContainer) return;
 
-    map.on('click', function (e) {
+    map = L.map("map").setView([10.7905, 78.7047], 7);
 
-        let lat = e.latlng.lat;
-        let lng = e.latlng.lng;
+    L.tileLayer(
 
-        document.getElementById("coords").innerText =
-            lat.toFixed(4) + ", " + lng.toFixed(4);
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 
-        if (marker) map.removeLayer(marker);
+        {
+            attribution: "© OpenStreetMap contributors"
+        }
+
+    ).addTo(map);
+
+
+
+    map.on("click", function (e) {
+
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        const coord = document.getElementById("coords");
+
+        if (coord) {
+
+            coord.innerText =
+                lat.toFixed(4) + ", " + lng.toFixed(4);
+
+        }
+
+        if (marker) {
+
+            map.removeLayer(marker);
+
+        }
 
         marker = L.marker([lat, lng]).addTo(map);
 
         zoneFactor = getZone(lat, lng);
 
-        // ⭐ IMPORTANT: UPDATE MINI MAP
         updateMiniMap(lat, lng);
+
     });
+
 }
 
 
-// ================= MINI MAP =================
+
+// ======================================================
+// MINI MAP
+// ======================================================
+
 function initMiniMap() {
 
-    miniMap = L.map('miniMap', {
+    const mini = document.getElementById("miniMap");
+
+    if (!mini) return;
+
+    miniMap = L.map("miniMap", {
+
         zoomControl: false,
         attributionControl: false,
-        interactive: false   // makes it icon-like
+        interactive: false
+
     }).setView([10.7905, 78.7047], 6);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-        .addTo(miniMap);
+    L.tileLayer(
+
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+    ).addTo(miniMap);
+
 }
+
+
 
 function updateMiniMap(lat, lng) {
 
@@ -69,46 +184,92 @@ function updateMiniMap(lat, lng) {
     miniMap.setView([lat, lng], 12);
 
     if (miniMarker) {
+
         miniMap.removeLayer(miniMarker);
+
     }
 
     miniMarker = L.marker([lat, lng]).addTo(miniMap);
+
 }
 
 
-// ================= ZONE LOGIC =================
+
+// ======================================================
+// ZONE FACTOR
+// ======================================================
+
 function getZone(lat, lng) {
+
     if (lat > 13) return 3.0;
+
     if (lat > 11) return 2.0;
+
     return 1.2;
+
 }
 
 
-// ================= MATERIAL RATE =================
+
+// ======================================================
+// MATERIAL RATE
+// ======================================================
+
 function getMaterialRate(type) {
-    if (type === "basic") return 1200;
-    if (type === "standard") return 1800;
-    if (type === "premium") return 2500;
-    return 1200;
+
+    switch (type) {
+
+        case "basic":
+            return 1200;
+
+        case "standard":
+            return 1800;
+
+        case "premium":
+            return 2500;
+
+        default:
+            return 1200;
+
+    }
+
 }
 
+
+
+// ======================================================
+// COST CALCULATOR
+// ======================================================
 
 function calculatePrice() {
 
-    let area = parseFloat(document.getElementById("area").value);
-    let material = document.getElementById("material").value;
+    const areaInput = document.getElementById("area");
+    const materialInput = document.getElementById("material");
+
+    if (!areaInput || !materialInput) return;
+
+    const area = parseFloat(areaInput.value);
+
+    const material = materialInput.value;
 
     if (!area || area <= 0) {
-        alert("Enter valid area");
+
+        alert("Please enter a valid area.");
+
         return;
+
     }
 
-    let landRate = 600;
+    const landRate = 600;
 
-    let landCost = area * landRate * zoneFactor;
-    let constructionCost = area * getMaterialRate(material);
+    const landCost = area * landRate * zoneFactor;
 
-    let total = landCost + constructionCost;
+    const constructionCost =
+        area * getMaterialRate(material);
+
+    const total = landCost + constructionCost;
+
+
 
     document.getElementById("landCost").innerText =
         landCost.toLocaleString();
@@ -119,86 +280,177 @@ function calculatePrice() {
     document.getElementById("total").innerText =
         total.toLocaleString();
 
-    // Show Result Card
-    document.querySelector(".result-card")
-            .classList.add("active");
+
+
+    const resultCard =
+        document.querySelector(".result-card");
+
+    if (resultCard) {
+
+        resultCard.classList.add("active");
+
+    }
+
 }
-// ================= FEATURE ANIMATION =================
+
+// ======================================================
+// CHOLA CONSTRUCTION
+// SCRIPT.JS - PART 2
+// Features + Parallax + Testimonials +
+// Materials + Blog Slider + Initialize
+// ======================================================
+
+
+
+// ======================================================
+// WHY CHOLA FEATURES
+// ======================================================
+
 const features = document.querySelectorAll(".feature");
 
 if (features.length > 0) {
-    const observer = new IntersectionObserver(entries => {
+
+    const observer = new IntersectionObserver((entries) => {
+
         entries.forEach(entry => {
+
             if (entry.isIntersecting) {
+
                 entry.target.classList.add("show");
+
             }
+
         });
-    }, { threshold: 0.2 });
+
+    }, {
+
+        threshold: 0.2
+
+    });
 
     features.forEach(feature => observer.observe(feature));
 
+
+
     features.forEach(feature => {
+
         feature.addEventListener("click", () => {
-            features.forEach(f => f.classList.remove("active"));
+
+            features.forEach(f => {
+
+                f.classList.remove("active");
+
+            });
+
             feature.classList.add("active");
+
         });
+
     });
+
 }
 
 
-// ================= PARALLAX =================
+
+// ======================================================
+// PARALLAX IMAGE
+// ======================================================
+
 const leftSide = document.querySelector(".left-side");
 
-document.addEventListener("mousemove", (e) => {
-    if (!leftSide) return;
+if (leftSide) {
 
-    let x = (e.clientX / window.innerWidth - 0.5) * 20;
-    let y = (e.clientY / window.innerHeight - 0.5) * 20;
+    document.addEventListener("mousemove", (e) => {
 
-    leftSide.style.transform = `translate(${x}px, ${y}px)`;
-});
+        const x =
+            (e.clientX / window.innerWidth - 0.5) * 20;
 
+        const y =
+            (e.clientY / window.innerHeight - 0.5) * 20;
 
-// ================= START =================
-window.onload = function () {
-    initMap();
-    initMiniMap();   // ⭐ IMPORTANT FIX
-};
+        leftSide.style.transform =
+            `translate(${x}px, ${y}px)`;
 
-let slides = document.querySelectorAll(".testimonial-card");
-let dots = document.querySelectorAll(".dot");
+    });
 
-let index = 0;
-
-function showSlide(n){
-
-    slides.forEach(slide => slide.classList.remove("active"));
-    dots.forEach(dot => dot.classList.remove("active"));
-
-    slides[n].classList.add("active");
-    dots[n].classList.add("active");
 }
 
-setInterval(() => {
 
-    index++;
 
-    if(index >= slides.length){
-        index = 0;
+// ======================================================
+// TESTIMONIAL SLIDER
+// ======================================================
+
+const slides =
+    document.querySelectorAll(".testimonial-card");
+
+const dots =
+    document.querySelectorAll(".dot");
+
+if (slides.length > 0) {
+
+    let currentSlide = 0;
+
+    function showSlide(index) {
+
+        slides.forEach(slide => {
+
+            slide.classList.remove("active");
+
+        });
+
+        dots.forEach(dot => {
+
+            dot.classList.remove("active");
+
+        });
+
+        slides[index].classList.add("active");
+
+        if (dots[index]) {
+
+            dots[index].classList.add("active");
+
+        }
+
     }
 
-    showSlide(index);
+    setInterval(() => {
 
-}, 4000);
+        currentSlide++;
 
-const showMoreBtn = document.getElementById("showMoreBtn");
+        if (currentSlide >= slides.length) {
+
+            currentSlide = 0;
+
+        }
+
+        showSlide(currentSlide);
+
+    }, 4000);
+
+}
+
+
+
+// ======================================================
+// SHOW MORE MATERIALS
+// ======================================================
+
+const showMoreBtn =
+    document.getElementById("showMoreBtn");
 
 if (showMoreBtn) {
 
     showMoreBtn.addEventListener("click", function () {
 
-        document.querySelectorAll(".hidden-brand").forEach(card => {
+        const hiddenCards =
+            document.querySelectorAll(".hidden-brand");
+
+        hiddenCards.forEach(card => {
+
             card.classList.add("show");
+
         });
 
         this.style.display = "none";
@@ -207,31 +459,97 @@ if (showMoreBtn) {
 
 }
 
-const track = document.querySelector(".blog-track");
 
-const nextBtn = document.querySelector(".next");
 
-const prevBtn = document.querySelector(".prev");
+// ======================================================
+// BLOG SLIDER
+// ======================================================
 
-nextBtn.addEventListener("click", () => {
+const track =
+    document.querySelector(".blog-track");
 
-    track.scrollBy({
+const nextBtn =
+    document.querySelector(".next");
 
-        left:350,
+const prevBtn =
+    document.querySelector(".prev");
 
-        behavior:"smooth"
+if (track && nextBtn && prevBtn) {
+
+    nextBtn.addEventListener("click", () => {
+
+        track.scrollBy({
+
+            left: 360,
+
+            behavior: "smooth"
+
+        });
 
     });
 
+
+
+    prevBtn.addEventListener("click", () => {
+
+        track.scrollBy({
+
+            left: -360,
+
+            behavior: "smooth"
+
+        });
+
+    });
+
+}
+
+
+
+// ======================================================
+// WINDOW LOAD
+// ======================================================
+
+window.addEventListener("load", () => {
+
+    if (document.getElementById("map")) {
+
+        initMap();
+
+    }
+
+    if (document.getElementById("miniMap")) {
+
+        initMiniMap();
+
+    }
+
 });
 
-prevBtn.addEventListener("click", () => {
 
-    track.scrollBy({
 
-        left:-350,
+// ======================================================
+// SMOOTH SCROLL FOR HASH LINKS
+// ======================================================
 
-        behavior:"smooth"
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+    anchor.addEventListener("click", function (e) {
+
+        const target =
+            document.querySelector(this.getAttribute("href"));
+
+        if (target) {
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+
+                behavior: "smooth"
+
+            });
+
+        }
 
     });
 

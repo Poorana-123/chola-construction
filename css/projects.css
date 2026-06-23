@@ -1,0 +1,121 @@
+/* ================= HERO ================= */
+.projects-hero{
+    height:80vh;
+    background:url("../assets/projects.avif") center/cover no-repeat;
+    position:relative;
+}
+
+.projects-hero .overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    text-align:center;
+}
+
+/* ================= FILTER ================= */
+.projects-filter{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin:40px 0;
+}
+
+.filter-btn{
+    padding:10px 20px;
+    border:none;
+    cursor:pointer;
+    background:#eee;
+    border-radius:25px;
+    transition:.3s;
+    background-color: #E3B837;
+}
+
+.filter-btn.active,
+.filter-btn:hover{
+    background:#E3B837;
+    color:#fff;
+}
+
+/* ================= GRID ================= */
+.projects-section{
+    padding:60px 8%;
+}
+
+.projects-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+/* responsive */
+@media(max-width:900px){
+    .project-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+@media(max-width:600px){
+    .projects-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* ================= CARD ================= */
+.projects-card{
+    background:#fff;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.projects-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.projects-content{
+    padding:20px;
+}
+
+.projects-content h3{
+    color:#0d2c54;
+    margin-bottom:10px;
+}
+
+.projects-content p{
+    color:#666;
+    margin-bottom:15px;
+}
+
+/* button */
+.btn{
+    display:inline-block;
+    padding:8px 15px;
+    background:#E3B837;
+    color:#fff;
+    border-radius:20px;
+    text-decoration:none;
+}
+
+/* hover */
+.projects-card:hover{
+    transform:translateY(-8px);
+}
+
+/* ================= CTA ================= */
+.projects-cta{
+    text-align:center;
+    padding:80px 20px;
+    background:#f9f9f9;
+}
+
+.projects-cta h2{
+    margin-bottom:10px;
+    color:#0d2c54;
+}
