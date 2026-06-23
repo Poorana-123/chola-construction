@@ -164,12 +164,21 @@
 }
 
 .blog-track{
+
     display:flex;
     gap:35px;
-    width:max-content;
-    animation:scrollBlog 40s linear infinite;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+
+    scrollbar-width:none;
+
 }
 
+.blog-track::-webkit-scrollbar{
+
+    display:none;
+
+}
 .blog-slider:hover .blog-track{
     animation-play-state:paused;
 }
@@ -297,5 +306,37 @@
         gap:20px;
 
     }
+
+}
+
+/*================ BLOG CONTROLS ================*/
+
+.blog-controls{
+
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-bottom:30px;
+
+}
+
+.blog-arrow{
+
+    width:50px;
+    height:50px;
+    border:none;
+    border-radius:50%;
+    background:#E3B837;
+    color:#fff;
+    cursor:pointer;
+    font-size:18px;
+    transition:.3s;
+
+}
+
+.blog-arrow:hover{
+
+    background:#E3B837;
+    transform:scale(1.08);
 
 }
