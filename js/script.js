@@ -190,3 +190,19 @@ setInterval(() => {
     showSlide(index);
 
 }, 4000);
+
+const showMoreBtn = document.getElementById("showMoreBtn");
+
+if (showMoreBtn) {
+
+    showMoreBtn.addEventListener("click", function () {
+
+        document.querySelectorAll(".hidden-brand").forEach(card => {
+            card.classList.add("show");
+        });
+
+        this.style.display = "none";
+
+    });
+
+}

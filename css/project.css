@@ -1,0 +1,283 @@
+/* Hero Section */
+.heros{
+    height:100vh;
+    background: linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)),
+    url("../assets/materials1.avif")
+    center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:20px;
+    margin-bottom: 60px;
+}
+
+.hero-contents h2{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.hero-contents p{
+    font-size:20px;
+    max-width:700px;
+    margin:auto;
+    margin-bottom:30px;
+}
+
+/*================ BRANDS ================*/
+.section-titles{
+
+    text-align:center;
+    margin-bottom:60px;
+    margin-top: 80px;
+
+}
+
+/* ================= BRAND GRID ================= */
+
+.brand-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .brand-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .brand-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.brand-card{
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    min-height:360px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    transition:.4s;
+}
+
+.brand-card:hover{
+    transform:translateY(-10px);
+}
+
+.brand-card img{
+    width:120px;
+    height:80px;
+    object-fit:contain;
+    margin-bottom:20px;
+}
+
+.brand-card h3{
+    color:#0d2c54;
+    margin-bottom:15px;
+}
+
+.brand-card p{
+    color:#666;
+    line-height:1.8;
+}
+
+.hidden-brand{
+    display:none;
+}
+
+.hidden-brand.show{
+    display:flex;
+    animation:fadeUp .6s ease;
+}
+/* ================= BUTTON ================= */
+
+.brand-btn{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:50px 0 20px;
+}
+
+.brand-btn .btn{
+    background:#E3B837;
+    color:#fff;
+    border:none;
+    padding:15px 40px;
+    font-size:17px;
+    font-weight:600;
+    border-radius:50px;
+    cursor:pointer;
+    transition:0.4s ease;
+    box-shadow:0 8px 20px rgba(0,200,150,.25);
+}
+
+.brand-btn .btn:hover{
+    background:#C89D22;
+    transform:translateY(-5px);
+    box-shadow:0 15px 30px rgba(13,44,84,.25);
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/*================ BLOG ================*/
+
+.blog{
+
+    padding:90px 10%;
+    background:white;
+
+}
+.blog-card{
+    width:350px;
+    flex-shrink:0;
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    transition:.4s;
+}
+
+.blog-slider{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+}
+
+.blog-track{
+    display:flex;
+    gap:35px;
+    width:max-content;
+    animation:scrollBlog 40s linear infinite;
+}
+
+.blog-slider:hover .blog-track{
+    animation-play-state:paused;
+}
+
+@keyframes scrollBlog{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(calc(-50% - 17.5px));
+    }
+
+}
+
+.blog{
+
+    padding:90px 10%;
+    background:white;
+
+}
+
+.blog-card img{
+
+    width:100%;
+    height:230px;
+    object-fit:cover;
+
+}
+
+.blog-content{
+
+    padding:28px;
+
+}
+
+.blog-content span{
+
+    background:#E3B837;
+    color:white;
+    padding:6px 15px;
+    border-radius:20px;
+    font-size:14px;
+
+}
+
+.blog-content h3{
+
+    margin:20px 0 15px;
+    color:#0d2c54;
+    line-height:1.5;
+
+}
+
+.blog-content p{
+
+    color:#666;
+    line-height:1.8;
+    margin-bottom:20px;
+
+}
+
+.blog-content a{
+
+    color:#0d2c54;
+    font-weight:600;
+    text-decoration:none;
+
+}
+
+.blog-content a:hover{
+
+    color:#C89D22;
+
+}
+
+.section-title{
+
+    text-align:center;
+    margin-bottom:60px;
+    margin-top:80px;
+    color:#0d2c54;
+
+}
+
+@media (max-width:992px){
+
+    .blog-card{
+
+        width:320px;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .blog-card{
+
+        width:280px;
+
+    }
+
+    .blog-track{
+
+        gap:20px;
+
+    }
+
+}
