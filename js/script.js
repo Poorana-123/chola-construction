@@ -554,3 +554,169 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 
 });
+
+let scene, camera, renderer, controls;
+let house, light;
+
+init();
+animate();
+
+function init() {
+
+  // ================= SCENE =================
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xaec6cf);
+
+  // ================= CAMERA =================
+  camera = new THREE.PerspectiveCamera(
+    60,
+    (window.innerWidth - 260) / window.innerHeight,
+    0.1,
+    1000
+  );
+
+  camera.position.set(5, 4, 6);
+
+  // ================= RENDERER =================
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth - 260, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  document.getElementById("scene-container").appendChild(renderer.domElement);
+
+  // ================= CONTROLS =================
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+
+  // ================= LIGHTS =================
+  light = new THREE.DirectionalLight(0xffffff, 1.2);
+  light.position.set(5, 10, 5);
+  light.castShadow = true;
+  scene.add(light);
+
+  const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambient);
+
+  // ================= GROUND =================
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(50, 50),
+    new THREE.MeshStandardMaterial({ color: 0x2e2e2e })
+  );
+
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  // ================= HOUSE (TEXTURED) =================
+  const loader = new THREE.TextureLoader();
+
+  const materials = [
+    new THREE.MeshStandardMaterial({ map: loader.load("assets/right.jpg") }),
+    new THREE.MeshStandardMaterial({ map: loader.load("assets/left.jpg") }),
+    new THREE.MeshStandardMaterial({ color: 0xffffff }),
+    new THREE.MeshStandardMaterial({ color: 0xffffff }),
+    new THREE.MeshStandardMaterial({ map: loader.load("assets/front.avif") }),
+    new THREE.MeshStandardMaterial({ map: loader.load("assets/back.jpg") })
+  ];
+
+  const base = new THREE.Mesh(
+    new THREE.BoxGeometry(3, 2, 3),
+    materials
+  );
+
+  base.position.y = 1;
+  base.castShadow = true;
+
+  // ================= ROOF =================
+  const roof = new THREE.Mesh(
+    new THREE.BoxGeometry(3.6, 0.4, 3.6),
+    new THREE.MeshStandardMaterial({ color: 0x333333 })
+  );
+
+  roof.position.y = 2.3;
+  roof.castShadow = true;
+
+  // ================= HOUSE GROUP =================
+  house = new THREE.Group();
+  house.add(base);
+  house.add(roof);
+
+  scene.add(house);
+
+  controls.target.set(0, 1, 0);
+
+  window.addEventListener("resize", onResize);
+}
+
+// ================= ANIMATION LOOP =================
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+// ================= RESIZE FIX =================
+function onResize() {
+  const width = window.innerWidth - 260;
+  const height = window.innerHeight;
+
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(width, height);
+}
+
+// ================= SMOOTH CAMERA MOVEMENT =================
+function moveCamera(x, y, z, tx = 0, ty = 1, tz = 0) {
+
+  gsap.to(camera.position, {
+    x, y, z,
+    duration: 1.2,
+    ease: "power2.out"
+  });
+
+  gsap.to(controls.target, {
+    x: tx,
+    y: ty,
+    z: tz,
+    duration: 1.2,
+    ease: "power2.out"
+  });
+}
+
+// ================= VIEW SWITCH =================
+function setView(view) {
+
+  switch (view) {
+
+    case "front":
+      moveCamera(5, 4, 6);
+      break;
+
+    case "back":
+      moveCamera(-5, 4, -6);
+      break;
+
+    case "left":
+      moveCamera(-6, 4, 5);
+      break;
+
+    case "right":
+      moveCamera(6, 4, -5);
+      break;
+
+    case "top":
+      moveCamera(0, 10, 0);
+      break;
+  }
+}
+
+// ================= LIGHT CONTROL =================
+function setLight(mode) {
+
+  if (mode === "day") light.intensity = 1.2;
+  if (mode === "evening") light.intensity = 0.6;
+  if (mode === "night") light.intensity = 0.15;
+}

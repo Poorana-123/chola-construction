@@ -1002,14 +1002,14 @@ border-top:6px solid #d4af37;
     padding: 0;
 }
 
-.footer ul li {
+.footer ul li a{
     margin-bottom: 8px;
     font-size: 14px;
     color: #cfd8ff;
     cursor: pointer;
 }
 
-.footer ul li:hover {
+.footer ul li a:hover {
     color: #E3B837;
 }
 

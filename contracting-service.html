@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contracting Services | Chola Construction</title>
+
+<style>
+
+/* ================= BASE ================= */
+body{
+  margin:0;
+  font-family:Segoe UI, sans-serif;
+  background:#f5f7fb;
+  color:#1e293b;
+}
+
+/* ================= HERO ================= */
+.hero{
+  background:linear-gradient(rgba(15,23,42,.75),rgba(15,23,42,.75)),
+  url("assets/contracting-hero.jpg") center/cover no-repeat;
+  color:white;
+  text-align:center;
+  padding:100px 10%;
+}
+
+.hero h1{
+  font-size:3rem;
+  margin:0;
+}
+
+.hero p{
+  max-width:800px;
+  margin:15px auto 0;
+  opacity:0.9;
+  line-height:1.6;
+}
+
+/* ================= SECTION ================= */
+.section{
+  padding:60px 10%;
+}
+
+h2{
+  margin-bottom:25px;
+}
+
+/* ================= STORY ================= */
+.story{
+  background:white;
+  padding:20px;
+  border-left:5px solid #f5b301;
+  border-radius:10px;
+  margin-bottom:15px;
+  line-height:1.7;
+}
+
+/* ================= GRID ================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.06);
+}
+
+/* ================= IMAGE GRID ================= */
+.img-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.img-card{
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+
+.img-card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  transition:0.4s;
+}
+
+.img-card:hover img{
+  transform:scale(1.08);
+}
+
+.img-card h3{
+  padding:15px;
+  margin:0;
+}
+
+/* ================= CTA ================= */
+.cta{
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  padding:70px 10%;
+}
+
+.cta a{
+  display:inline-block;
+  margin-top:15px;
+  padding:12px 25px;
+  background:#f5b301;
+  color:#0f172a;
+  text-decoration:none;
+  border-radius:25px;
+  font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Contracting Services</h1>
+  <p>We provide complete construction contracting solutions with skilled manpower, quality execution, and on-time delivery.</p>
+</div>
+
+<!-- ABOUT -->
+<section class="section">
+  <h2>About Our Contracting Service</h2>
+
+  <div class="story">
+    We offer full-scale construction contracting services for residential and commercial projects with complete project management support.
+  </div>
+
+  <div class="story">
+    Our team handles everything from labor management to material coordination, ensuring smooth execution without delays or confusion.
+  </div>
+
+  <div class="story">
+    With years of experience, we deliver reliable construction work with strict quality control and professional supervision.
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section">
+  <h2>What We Handle</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>🏗️ Full Project Contract</h3>
+      <p>Complete construction management from start to finish.</p>
+    </div>
+
+    <div class="card">
+      <h3>👷 Labour Supply</h3>
+      <p>Skilled and experienced workers for all construction needs.</p>
+    </div>
+
+    <div class="card">
+      <h3>📦 Material Coordination</h3>
+      <p>We manage and supply quality materials on-site.</p>
+    </div>
+
+    <div class="card">
+      <h3>📊 Site Supervision</h3>
+      <p>Daily monitoring and quality assurance by engineers.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section">
+  <h2>Our Contracting Work</h2>
+
+  <div class="img-grid">
+
+    <div class="img-card">
+      <img src="assets/contract1.jpg">
+      <h3>Residential Construction</h3>
+    </div>
+
+    <div class="img-card">
+      <img src="assets/contract2.jpg">
+      <h3>Commercial Site Work</h3>
+    </div>
+
+    <div class="img-card">
+      <img src="assets/contract3.jpg">
+      <h3>Structural Execution</h3>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>Need Reliable Contracting Services?</h2>
+  <p>We manage your entire construction project with care and professionalism.</p>
+  <a href="contact.html">Get Free Consultation</a>
+</div>
+
+</body>
+</html>
