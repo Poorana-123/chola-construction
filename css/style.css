@@ -336,8 +336,8 @@ body{
     align-items: center;
     justify-content: center;
 
-    background: #fff;
-    color: #E3B837;
+    background: #E3B837;
+    color: #fff;
     
 
     border-radius: 50%;
@@ -638,6 +638,7 @@ body{
     25% 94%,
     0% 50%);
 }
+
 
 
 /* Calculator */
